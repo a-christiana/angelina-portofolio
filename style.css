@@ -1,0 +1,719 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --navy: #1a2342;
+    --navy-dark: #141b36;
+    --cream: #f5f0eb;
+    --white: #ffffff;
+    --text-dark: #1a2342;
+    --text-light: #ffffff;
+    --text-muted: #6b7280;
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-body: 'Jeju Gothic', sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-body);
+    background: var(--cream);
+    color: var(--text-dark);
+    width: 100%;
+    overflow-x: hidden;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    height: 80px;
+    background: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 48px;
+    border-bottom: 1px solid rgba(26, 35, 66, 0.08);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.nav-logo {
+    width: 70px;
+    height: 40px;
+}
+
+.nav-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: var(--navy);
+}
+
+.page {
+    display: none;
+    min-height: 100vh;
+    padding-top: 80px;
+}
+
+.page.active {
+    display: block;
+}
+
+footer {
+    background: var(--navy-dark);
+    color: rgba(255, 255, 255, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 48px;
+    font-size: 12px;
+}
+
+footer .footer-left {
+    font-weight: 700;
+    letter-spacing: 1px;
+    font-family: var(--font-display);
+}
+
+footer .footer-contacts {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+}
+
+footer .footer-contacts span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+footer a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+}
+
+#home {
+    background: var(--cream);
+}
+
+.home-hero {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 60px 80px 60px 80px;
+    position: relative;
+}
+
+.home-hero-text {
+    max-width: 440px;
+    padding-top: 20px;
+}
+
+.home-title {
+    font-family: var(--font-display);
+    font-size: 64px;
+    font-weight: 800;
+    color: var(--navy);
+    line-height: 1;
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+}
+
+.home-desc {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--navy);
+    max-width: 280px;
+}
+
+.home-hero-photo {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid var(--cream);
+    box-shadow: 0 8px 32px rgba(26, 35, 66, 0.18);
+    flex-shrink: 0;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.home-hero-photo img,
+.home-hero-photo svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.about-photo-circle {
+    position: absolute;
+    top: -150px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    height: 300px;
+    border-radius: 50% / 50%;
+    overflow: hidden;
+    border: 6px solid var(--cream);
+    box-shadow: 0 8px 40px rgba(26, 35, 66, 0.28);
+    cursor: pointer;
+    z-index: 10;
+}
+
+.about-photo-circle img,
+.about-photo-circle svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.home-bottom {
+    background: var(--navy);
+    color: var(--text-light);
+    position: relative;
+    padding: 170px 80px 60px 80px;
+    display: flex;
+    gap: 80px;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.edu-section,
+.skills-section {
+    flex: 1;
+}
+
+.section-title {
+    font-family: var(--font-display);
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 32px;
+    letter-spacing: 1px;
+    align-items: center;
+}
+
+.edu-card {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.edu-card .school-name {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.edu-card .school-year {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 2px;
+}
+
+.edu-card .school-desc {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.edu-card .school-badge {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+    size: 50%;
+}
+
+.edu-card .badge-logo {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+}
+
+.edu-card .badge-label {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.skills-card {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 28px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.skill-item {
+    font-size: 15px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+#hobby {
+    background: var(--cream);
+}
+
+.hobby-hero {
+    background: url('assets/hobby/header.jpg') center/cover;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 48px 80px;
+    position: relative;
+}
+
+.hobby-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(80, 110, 160, 0.45), rgba(60, 90, 130, 0.65));
+}
+
+.hobby-hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.hobby-hero h1 {
+    font-family: var(--font-display);
+    font-size: 56px;
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 10px;
+}
+
+.hobby-hero p {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 500px;
+    line-height: 1.6;
+}
+
+.hobby-list {
+    padding: 60px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+
+.hobby-item {
+    display: flex;
+    gap: 48px;
+    align-items: center;
+}
+
+.hobby-item.reverse {
+    flex-direction: row-reverse;
+    text-align: center;
+}
+
+.hobby-img {
+    width: 340px;
+    height: 210px;
+    flex-shrink: 0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.hobby-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hobby-text h2 {
+    font-family: var(--font-display);
+    font-size: 30px;
+    font-weight: 800;
+    color: var(--navy);
+    margin-bottom: 14px;
+    letter-spacing: 0.5px;
+}
+
+.hobby-text p {
+    font-size: 14px;
+    line-height: 1.8;
+    color: #333;
+}
+
+.hobby-item.reverse .hobby-text {
+    max-width: 340px;
+}
+
+#gallery {
+    background: var(--cream);
+}
+
+.gallery-hero {
+    position: relative;
+    min-height: 280px;
+    overflow: visible;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.gallery-hero-bg {
+    position: absolute;
+    inset: 0;
+    background: url('assets/gallery/Angel Gradu.jpg') center 60% /cover;
+}
+
+.gallery-hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(20, 27, 54, 0.2), rgba(20, 27, 54, 0.9));
+}
+
+.gallery-title-box {
+    position: relative;
+    z-index: 2;
+    background: var(--navy);
+    padding: 14px 60px;
+    width: fit-content;
+    transform: translateY(40px);
+}
+
+.gallery-title-box h1 {
+    font-family: var(--font-display);
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--white);
+    letter-spacing: 2px;
+}
+
+.gallery-intro {
+    text-align: center;
+    padding: 80px 40px 20px;
+    font-size: 13.5px;
+    color: #555;
+    line-height: 1.8;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    padding: 20px 60px 60px;
+}
+
+.g-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    aspect-ratio: 1 / 1;
+    cursor: pointer;
+    background: #ddd;
+
+    transition:
+        filter 0.35s ease,
+        transform 0.35s ease;
+}
+
+.tile-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    transition: filter 0.2s;
+}
+
+.g-item:hover .tile-inner {
+    filter: brightness(0.88);
+}
+
+.tile-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.tile-label {
+    font-size: 11px;
+    color: rgba(60, 80, 130, 0.6);
+    font-family: var(--font-body);
+}
+
+.tile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    transform: scale(1.12);
+    transition: transform 0.45s ease;
+}
+
+.g-item:hover .tile-img {
+    transform: scale(1);
+}
+
+.g-placeholder {
+    width: 100%;
+    height: 100%;
+}
+
+.lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition: 0.3s;
+    z-index: 999;
+}
+
+.lightbox.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.lightbox img {
+    max-width: 85%;
+    max-height: 85%;
+    border-radius: 12px;
+
+    transform: scale(0.9);
+    transition: 0.3s;
+}
+
+.lightbox.active img {
+    transform: scale(1);
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+
+    font-size: 42px;
+    color: white;
+    cursor: pointer;
+}
+
+.gallery-grid:hover .g-item {
+    filter: grayscale(100%) brightness(0.7);
+    transition: 0.35s ease;
+}
+
+.gallery-grid .g-item:hover {
+    filter: grayscale(0%) brightness(1);
+}
+
+
+@media (max-width: 800px) {
+
+    html,
+    body {
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    nav {
+        width: 100%;
+        padding: 12px 16px;
+        box-sizing: border-box;
+    }
+
+    nav ul {
+        gap: 18px !important;
+        font-size: 13px !important;
+    }
+
+    .nav-logo {
+        width: 52px;
+        height: auto;
+        margin-left: -20px;
+    }
+
+    .page {
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    .home-hero {
+        flex-direction: column-reverse;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+
+        padding: 40px 20px 30px;
+        gap: 24px;
+
+        width: 100%;
+    }
+
+    .home-hero-text {
+        max-width: 100%;
+        padding-top: 0;
+    }
+
+    .home-title {
+        font-size: 52px;
+        line-height: 0.95;
+    }
+
+    .home-desc {
+        max-width: 100%;
+        font-size: 13px;
+    }
+
+    .home-hero-photo {
+        width: 200px;
+        height: 200px;
+        margin-top: 0;
+    }
+
+    .about-photo-circle {
+        position: relative;
+
+        top: unset;
+        left: unset;
+        transform: none;
+
+        width: 150px;
+        height: 240px;
+
+        margin: 0 auto 30px;
+    }
+
+    .home-bottom {
+        width: 100%;
+        padding: 50px 20px;
+
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+
+        gap: 36px;
+    }
+
+    .edu-section,
+    .skills-section {
+        width: 100%;
+    }
+
+    .section-title {
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
+
+    .edu-card,
+    .skills-card {
+        width: 100%;
+    }
+
+    .hobby-hero {
+        padding: 40px 20px;
+        min-height: 240px;
+    }
+
+    .hobby-hero h1 {
+        font-size: 44px;
+    }
+
+    .hobby-list {
+        padding: 40px 20px;
+        gap: 40px;
+    }
+
+    .hobby-item,
+    .hobby-item.reverse {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hobby-text {
+        max-width: 100%;
+    }
+
+    .hobby-img {
+        width: 100%;
+        height: 220px;
+    }
+
+    .gallery-title-box h1 {
+        font-size: 38px;
+    }
+
+    .gallery-intro {
+        padding: 70px 20px 10px;
+        font-size: 12px;
+    }
+
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 10px;
+        padding: 16px;
+        width: 100%;
+    }
+
+    footer {
+        flex-direction: column;
+        gap: 5px;
+        align-items: flex-start;
+        text-align: left;
+        padding: 20px;
+    }
+
+    .footer-contacts {
+        flex-direction: column;
+        gap: 1px;
+        align-items: flex-start;
+        text-align: left;
+        line-height: 1;
+    }
+
+    .footer-contacts span {
+        display: block;
+        width: 100%;
+        justify-content: flex-start;
+        text-align: left;
+        line-height: 1;
+        gap: 2px;
+        margin: 0;
+        padding: 0;
+    }
+}

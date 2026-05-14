@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Match</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Jeju+Gothic&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        .card {
+            width: 80px;
+            height: 80px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .card-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transition: transform 0.5s;
+            transform-style: preserve-3d;
+        }
+
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front,
+        .card-back {
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            backface-visibility: hidden;
+        }
+
+        .card-front {
+            background: #1a2342;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+            overflow: hidden;
+        }
+
+        .card-back img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .matched {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 640px) {
+            .card {
+                width: 72px;
+                height: 72px;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-[#f5f0eb] min-h-screen" style="font-family:'Jeju Gothic', sans-serif;">
+    <!-- NAVBAR -->
+    <nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-12 py-4 bg-[#f5f0eb]/70 backdrop-blur-md border-b border-white/20 shadow-sm">
+        <div class="w-[70px] h-[40px] flex items-center justify-center shrink-0">
+            <img src="assets/home/logo.png">
+        </div>
+
+        <ul class="flex gap-10 list-none text-[15px] font-bold text-[#1a2342]" style="font-family: 'Jeju Gothic', sans-serif;">
+            <li><a href="index.html" class="opacity-50 hover:opacity-70 transition">Home</a> </li>
+            <li><a href="hobby.html" class="opacity-50 hover:opacity-70 transition">Hobby</a></li>
+            <li><a href="gallery.html" class="opacity-50 hover:opacity-70 transition">Gallery</a></li>
+        </ul>
+    </nav>
+
+    <!-- PAGE -->
+    <div class="pt-28 pb-10 px-4">
+
+        <div class="text-center mb-8">
+            <h1 class="text-6xl tracking-wide text-[#1a2342]" style="font-family:'Bebas Neue', sans-serif;">
+                MEMORY MATCH
+            </h1>
+
+            <p class="text-sm text-[#1a2342]/70 mt-2">
+                Match all photos.
+            </p>
+        </div>
+
+        <div class="flex justify-center gap-3 md:gap-6 mb-8 flex-wrap">
+            <div class="bg-[#1a2342] text-white px-5 py-3 rounded-2xl shadow-lg">
+                Moves:
+                <span id="moves">0</span>
+            </div>
+
+            <div class="bg-[#1a2342] text-white px-5 py-3 rounded-2xl shadow-lg">
+                Matches:
+                <span id="matches">0</span>/8
+            </div>
+
+            <button onclick="restartGame()" class="bg-white border border-[#1a2342] text-[#1a2342] px-5 py-3 rounded-2xl font-bold hover:scale-95 transition">
+                Restart
+            </button>
+        </div>
+
+
+        <div id="gameBoard"
+            class="grid grid-cols-4 gap-2 w-fit mx-auto">
+        </div>
+    </div>
+
+    <script>
+        const images = [
+            "assets/game/kucing1.jpg",
+            "assets/game/kucing2.jpg",
+            "assets/game/kucing3.jpg",
+            "assets/game/kucing4.jpg",
+            "assets/game/kucing5.jpg",
+            "assets/game/kucing6.jpg",
+            "assets/game/kucing7.jpg",
+            "assets/game/kucing8.jpg"
+        ];
+
+        let cards = [...images, ...images];
+        let firstCard = null;
+        let secondCard = null;
+        let lockBoard = false;
+        let moves = 0;
+        let matches = 0;
+
+        const board = document.getElementById("gameBoard");
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function createBoard() {
+            board.innerHTML = "";
+            shuffle(cards);
+            cards.forEach((imgSrc) => {
+                const card = document.createElement("div");
+                card.className = "card";
+                card.dataset.image = imgSrc;
+                card.innerHTML = `
+                    <div class="card-inner">
+
+                        <div class="card-front">
+                            ?
+                        </div>
+
+                        <div class="card-back">
+                            <img src="${imgSrc}">
+                        </div>
+                    </div>
+
+                `;
+                card.addEventListener("click", flipCard);
+                board.appendChild(card);
+            });
+        }
+
+        function flipCard() {
+            if (lockBoard) return;
+            if (this === firstCard) return;
+            this.classList.add("flipped");
+
+            if (!firstCard) {
+                firstCard = this;
+                return;
+            }
+            secondCard = this;
+            moves++;
+
+            document.getElementById("moves").innerText = moves;
+            checkMatch();
+        }
+
+        function checkMatch() {
+            const isMatch =
+                firstCard.dataset.image === secondCard.dataset.image;
+            if (isMatch) {
+                firstCard.classList.add("matched");
+                secondCard.classList.add("matched");
+                matches++;
+
+                document.getElementById("matches").innerText = matches;
+                resetTurn();
+
+                if (matches === 8) {
+                    setTimeout(() => {
+                        alert("You matched everything.");
+                    }, 400);
+                }
+            }
+
+            else {
+                lockBoard = true;
+                setTimeout(() => {
+                    firstCard.classList.remove("flipped");
+                    secondCard.classList.remove("flipped");
+                    resetTurn();
+                }, 900);
+            }
+        }
+
+        function resetTurn() {
+            firstCard = null;
+            secondCard = null;
+            lockBoard = false;
+        }
+
+        function restartGame() {
+            firstCard = null;
+            secondCard = null;
+            lockBoard = false;
+            moves = 0;
+            matches = 0;
+
+            document.getElementById("moves").innerText = 0;
+            document.getElementById("matches").innerText = 0;
+            createBoard();
+        }
+        createBoard();
+    </script>
+</body>
+</html>
